@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
 
@@ -39,6 +39,6 @@ jobs:
             export RPC_URL=$RPC_URL
             export TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
             export WATCH_ADDRESS=$WATCH_ADDRESS
-            cd /home/ec2-user/fwatchbot/FoundationWatch
+            cd /home/ec2-user/fwatchbot
             bash deploy.sh
           EOF

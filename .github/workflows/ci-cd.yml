@@ -38,6 +38,6 @@ jobs:
             export RPC_URL=$RPC_URL
             export TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
             export WATCH_ADDRESS=$WATCH_ADDRESS
-            cd /home/ec2-user/fwatchbot
+            cd /home/ec2-user/fwatchbot/FoundationWatch
             bash deploy.sh
           EOF

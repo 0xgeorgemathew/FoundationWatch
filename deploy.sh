@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Navigate to the application directory
-cd /home/ec2-user/fwatchbot
+cd /home/ec2-user/fwatchbot/FoundationWatch
 
 # Load environment variables from the .env file
 if [ -f .env ]; then

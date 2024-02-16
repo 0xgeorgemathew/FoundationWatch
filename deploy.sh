@@ -14,7 +14,7 @@ npm install
 npm run build
 
 # Restart the application using PM2
-pm2 restart all || pm2 start dist/monitorContract.js --name ethereum-monitor
+pm2 restart all || pm2 start dist/monitorBalance.js --name ethereum-monitor
 
 # If you're not using PM2, you can use other methods to start your application,
 # such as `node dist/monitorContract.js` or using a process manager like forever or nodemon.

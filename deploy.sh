@@ -6,7 +6,9 @@ cd /home/ec2-user/fwatchbot/
 if [ -f .env ]; then
   export $(cat .env | xargs)
 fi
-
+echo "RPC_URL: $RPC_URL"
+echo "TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN"
+echo "WATCH_ADDRESS: $WATCH_ADDRESS"
 # Install dependencies
 npm install
 # Compile TypeScript to JavaScript

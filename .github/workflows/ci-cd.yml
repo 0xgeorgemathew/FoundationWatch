@@ -30,7 +30,8 @@ jobs:
           ssh-keyscan -H ec2-3-140-221-146.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
 
           # Copy code to EC2 instance
-          scp -r . ec2-user@ec2-3-140-221-146.us-east-2.compute.amazonaws.com:/home/ec2-user/fwatchbot
+          scp -r $(pwd)/ ec2-user@ec2-3-140-221-146.us-east-2.compute.amazonaws.com:/home/ec2-user/fwatchbot
+
 
           # Execute deploy script on EC2 instance
           ssh ec2-user@ec2-3-140-221-146.us-east-2.compute.amazonaws.com 'bash -s' <<EOF

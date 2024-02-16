@@ -1,23 +1,42 @@
-name: CI/CD
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      ALCHMEY_KEY: ${{ secrets.ALCHMEY_KEY }}
+
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "18"
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
+
+      - name: Deploy to EC2
+        env:
+          RPC_URL: ${{ secrets.RPC_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          WATCH_ADDRESS: ${{ secrets.WATCH_ADDRESS }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        run: |
+          # Set up SSH key
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ec2-3-140-221-146.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+
+          # Copy code to EC2 instance
+          scp -r . ec2-user@ec2-3-140-221-146.us-east-2.compute.amazonaws.com:/home/ec2-user/fwatchbot
+
+          # Execute deploy script on EC2 instance
+          ssh ec2-user@ec2-3-140-221-146.us-east-2.compute.amazonaws.com 'bash -s' <<EOF
+            export RPC_URL=$RPC_URL
+            export TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
+            export WATCH_ADDRESS=$WATCH_ADDRESS
+            cd /home/ec2-user/fwatchbot
+            bash deploy.sh
+          EOF

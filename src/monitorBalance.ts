@@ -22,6 +22,7 @@ function printCurrentTime() {
     month: "2-digit",
     day: "2-digit",
     hour12: false,
+    timeZone: "Asia/Kolkata",
   };
 
   const currentTime = new Date();

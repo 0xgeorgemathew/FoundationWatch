@@ -40,5 +40,6 @@ jobs:
             export TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
             export WATCH_ADDRESS=$WATCH_ADDRESS
             cd /home/ec2-user/fwatchbot
-            bash deploy.sh
+            bash deploy.sh > /home/ec2-user/fwatchbot/deploy.log 2>&1
+            tail -n 50 /home/ec2-user/fwatchbot/deploy.log
           EOF

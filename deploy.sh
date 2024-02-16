@@ -14,8 +14,9 @@ npm install
 # Compile TypeScript to JavaScript
 npm run build
 
+pm2 delete all
 # Restart the application using PM2
-pm2 restart all || pm2 start dist/monitorBalance.js --name foundation-watcher
+pm2 start dist/monitorBalance.js --name foundation-watcher --update-env
 
 # If you're not using PM2, you can use other methods to start your application,
 # such as `node dist/monitorContract.js` or using a process manager like forever or nodemon.

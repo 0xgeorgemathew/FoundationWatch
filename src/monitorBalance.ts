@@ -11,6 +11,8 @@ const watchAddress = process.env.WATCH_ADDRESS; // EthDev contract address
 const RPC_URL = process.env.RPC_URL;
 let lastBalance = parseEther("0");
 if (!watchAddress) throw new Error("WATCH_ADDRESS must be provided");
+if (!RPC_URL) throw new Error("RPC_URL must be provided");
+
 function printCurrentTime() {
   const options: Intl.DateTimeFormatOptions = {
     hour: "2-digit",
@@ -56,9 +58,11 @@ function createWebSocket() {
   });
   ws.on("error", (error: any) => {
     console.log("WebSocket error: ", error);
+    sendMessageToChannel("WebSocket error: ");
   });
   ws.on("open", () => {
     console.log("Connected successfully.");
+    sendMessageToChannel("Connected successfully.");
   });
   return ws;
 }
@@ -75,13 +79,13 @@ async function checkBalanceDelta() {
           2
         )} ETH transferred \n\n New balance: ${Number(
           formatUnits(currentBalance)
-        ).toFixed(2)} ETH`
+        ).toFixed(2)} ETH \n\n ${printCurrentTime()}`
       );
       const message = ` *${Number(formatUnits(delta)).toFixed(
         2
       )} Ether transferred \n\n New balance: ${Number(
         formatUnits(currentBalance)
-      ).toFixed(2)} ETH*`;
+      ).toFixed(2)} ETH* \n\n ${printCurrentTime()}`;
 
       sendMessageToChannel(message, { parse_mode: "Markdown" });
     }

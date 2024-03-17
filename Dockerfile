@@ -17,4 +17,4 @@ COPY dist/ ./
 EXPOSE 3000  
 
 # Command to run when the container starts (adapt as needed)
-CMD ["node", "dist/telegramBot.js"] 
+CMD ["node", "dist/monitorBalance.js"] 

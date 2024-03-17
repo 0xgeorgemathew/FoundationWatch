@@ -12,6 +12,7 @@ import { sendMessageToChannel } from "./telegramBot";
 const watchAddress = process.env.WATCH_ADDRESS; // EthDev contract address
 const RPC_URL = process.env.RPC_URL;
 let lastBalance = parseEther("0");
+
 if (!watchAddress) throw new Error("WATCH_ADDRESS must be provided");
 if (!RPC_URL) throw new Error("RPC_URL must be provided");
 
@@ -76,7 +77,7 @@ async function checkBalanceDelta() {
   try {
     const currentBalance = await provider.getBalance(watchAddress ?? "");
     const delta = lastBalance.sub(currentBalance);
-    if (currentBalance != lastBalance) {
+    if (!delta.isZero()) {
       console.log(
         ` ${Number(formatUnits(delta)).toFixed(
           2

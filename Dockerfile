@@ -16,3 +16,5 @@ COPY dist ./
 # Expose port (if needed)
 EXPOSE 3000  
 
+# Command to run 
+CMD ["node", "monitorBalance.js"] 

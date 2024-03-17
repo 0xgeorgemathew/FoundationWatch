@@ -1,20 +1,20 @@
-# Base image - Choose appropriate Node.js version
+# Base image
 FROM node:20-alpine
 
-# Working directory within the container
+# Working directory
 WORKDIR /app
 
-# Copy necessary dependencies
+# Copy dependencies definition
 COPY package*.json ./
 
-# Install dependencies 
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the source code
-COPY dist/ ./ 
+# Copy transpiled code
+COPY dist ./ 
 
-# Expose a default port for your Node.js applications
+# Expose port (if needed)
 EXPOSE 3000  
 
-# Command to run when the container starts (adapt as needed)
-CMD ["node", "dist/monitorBalance.js"] 
+# Command to run 
+CMD ["node", "monitorBalance.js"] 

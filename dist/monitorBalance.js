@@ -5,13 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ethers_1 = require("ethers");
+const { formatUnits, parseEther } = ethers_1.ethers.utils;
 const ws_1 = __importDefault(require("ws"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const telegramBot_1 = require("./telegramBot");
 const watchAddress = process.env.WATCH_ADDRESS; // EthDev contract address
 const RPC_URL = process.env.RPC_URL;
-let lastBalance = (0, ethers_1.parseEther)("0");
+let lastBalance = parseEther("0");
 if (!watchAddress)
     throw new Error("WATCH_ADDRESS must be provided");
 if (!RPC_URL)
@@ -39,8 +40,8 @@ async function listenForNewBlocks() {
 async function checkBalance() {
     lastBalance = await provider.getBalance(watchAddress ?? "");
     console.log(`${printCurrentTime()}`);
-    console.log(`Balance: ${Number((0, ethers_1.formatUnits)(lastBalance)).toFixed(2)} ETH`);
-    const message = `*Balance: ${Number((0, ethers_1.formatUnits)(lastBalance)).toFixed(2)} ETH* \n\n ${printCurrentTime()}`;
+    console.log(`Balance: ${Number(formatUnits(lastBalance)).toFixed(2)} ETH`);
+    const message = `*Balance: ${Number(formatUnits(lastBalance)).toFixed(2)} ETH* \n\n ${printCurrentTime()}`;
     (0, telegramBot_1.sendMessageToChannel)(message, { parse_mode: "Markdown" });
     await listenForNewBlocks();
 }
@@ -50,7 +51,7 @@ function createWebSocket() {
         (0, telegramBot_1.sendMessageToChannel)("WebSocket connection closed");
         console.log("Disconnected. Reconnecting...");
         setTimeout(() => {
-            provider = new ethers_1.ethers.WebSocketProvider(createWebSocket());
+            provider = new ethers_1.ethers.providers.WebSocketProvider(createWebSocket());
             checkBalance();
         }, 3000);
     });
@@ -65,14 +66,14 @@ function createWebSocket() {
     return ws;
 }
 // Set up a provider to connect to an Ethereum node
-let provider = new ethers_1.ethers.WebSocketProvider(createWebSocket());
+let provider = new ethers_1.ethers.providers.WebSocketProvider(createWebSocket());
 async function checkBalanceDelta() {
     try {
         const currentBalance = await provider.getBalance(watchAddress ?? "");
-        const delta = lastBalance - currentBalance;
+        const delta = lastBalance.sub(currentBalance);
         if (currentBalance != lastBalance) {
-            console.log(` ${Number((0, ethers_1.formatUnits)(delta)).toFixed(2)} ETH transferred \n\n New balance: ${Number((0, ethers_1.formatUnits)(currentBalance)).toFixed(2)} ETH \n\n ${printCurrentTime()}`);
-            const message = ` *${Number((0, ethers_1.formatUnits)(delta)).toFixed(2)} Ether transferred \n\n New balance: ${Number((0, ethers_1.formatUnits)(currentBalance)).toFixed(2)} ETH* \n\n ${printCurrentTime()}`;
+            console.log(` ${Number(formatUnits(delta)).toFixed(2)} ETH transferred \n\n New balance: ${Number(formatUnits(currentBalance)).toFixed(2)} ETH \n\n ${printCurrentTime()}`);
+            const message = ` *${Number(formatUnits(delta)).toFixed(2)} Ether transferred \n\n New balance: ${Number(formatUnits(currentBalance)).toFixed(2)} ETH* \n\n ${printCurrentTime()}`;
             (0, telegramBot_1.sendMessageToChannel)(message, { parse_mode: "Markdown" });
         }
         lastBalance = currentBalance;

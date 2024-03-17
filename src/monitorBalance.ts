@@ -1,6 +1,8 @@
 // Description: Monitor Ethereum address for changes in balance
 
-import { ethers, formatUnits, parseEther } from "ethers";
+import { ethers } from "ethers";
+const { formatUnits, parseEther } = ethers.utils;
+
 import WebSocket from "ws";
 import dotenv from "dotenv";
 dotenv.config();
@@ -53,7 +55,7 @@ function createWebSocket() {
     sendMessageToChannel("WebSocket connection closed");
     console.log("Disconnected. Reconnecting...");
     setTimeout(() => {
-      provider = new ethers.WebSocketProvider(createWebSocket());
+      provider = new ethers.providers.WebSocketProvider(createWebSocket());
       checkBalance();
     }, 3000);
   });
@@ -68,12 +70,12 @@ function createWebSocket() {
   return ws;
 }
 // Set up a provider to connect to an Ethereum node
-let provider = new ethers.WebSocketProvider(createWebSocket());
+let provider = new ethers.providers.WebSocketProvider(createWebSocket());
 
 async function checkBalanceDelta() {
   try {
     const currentBalance = await provider.getBalance(watchAddress ?? "");
-    const delta = lastBalance - currentBalance;
+    const delta = lastBalance.sub(currentBalance);
     if (currentBalance != lastBalance) {
       console.log(
         ` ${Number(formatUnits(delta)).toFixed(

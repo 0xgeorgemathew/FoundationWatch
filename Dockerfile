@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the rest of the source code
-COPY . ./
+COPY dist/ ./ 
 
 # Expose a default port for your Node.js applications
 EXPOSE 3000  

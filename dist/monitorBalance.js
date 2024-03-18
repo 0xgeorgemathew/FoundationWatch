@@ -71,7 +71,7 @@ async function checkBalanceDelta() {
     try {
         const currentBalance = await provider.getBalance(watchAddress ?? "");
         const delta = lastBalance.sub(currentBalance);
-        if (currentBalance != lastBalance) {
+        if (!delta.isZero()) {
             console.log(` ${Number(formatUnits(delta)).toFixed(2)} ETH transferred \n\n New balance: ${Number(formatUnits(currentBalance)).toFixed(2)} ETH \n\n ${printCurrentTime()}`);
             const message = ` *${Number(formatUnits(delta)).toFixed(2)} Ether transferred \n\n New balance: ${Number(formatUnits(currentBalance)).toFixed(2)} ETH* \n\n ${printCurrentTime()}`;
             (0, telegramBot_1.sendMessageToChannel)(message, { parse_mode: "Markdown" });

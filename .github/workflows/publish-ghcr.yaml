@@ -26,14 +26,3 @@ jobs:
           docker login --username 0xgeorgemathew --password ${{ secrets.GH_PAT }} ghcr.io
           docker build . --tag ghcr.io/0xgeorgemathew/foundationwatch:latest
           docker push ghcr.io/0xgeorgemathew/foundationwatch:latest
-      - name: Deploy To Server
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          script: |
-            docker pull ghcr.io/0xgeorgemathew/foundationwatch:latest
-            docker stop foundationwatch || true
-            docker rm foundationwatch || true
-            docker run -d -e ${{ secrets.RPC_URL_HTTPS }} -e ${{ secrets.RPC_URL_WSS }} -e ${{ secrets.TELEGRAM_BOT_TOKEN }} -e ${{ secrets.WATCH_ADDRESS }} --name foundationwatch --restart unless-stopped ghcr.io/0xgeorgemathew/foundationwatch:latest

@@ -1,0 +1,24 @@
+name: Deploy to Server
+on:
+  workflow_run:
+    workflows: ["Docker Image CI for GHCR"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            docker pull ghcr.io/0xgeorgemathew/foundationwatch:latest
+            docker stop foundationwatch || true
+            docker rm foundationwatch || true
+            docker run -d -e ${{ secrets.RPC_URL_HTTPS }} -e ${{ secrets.RPC_URL_WSS }} -e ${{ secrets.TELEGRAM_BOT_TOKEN }} -e ${{ secrets.WATCH_ADDRESS }} --name foundationwatch --restart unless-stopped ghcr.io/0xgeorgemathew/foundationwatch:latest

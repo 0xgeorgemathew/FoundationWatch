@@ -1,4 +1,4 @@
-name: Deploy to Server
+name: Deploy Docker Image from GHCR to Server
 on:
   workflow_run:
     workflows: ["Docker Image CI for GHCR"]
@@ -6,7 +6,7 @@ on:
       - completed
 
 jobs:
-  deploy:
+  deploy_to_server:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

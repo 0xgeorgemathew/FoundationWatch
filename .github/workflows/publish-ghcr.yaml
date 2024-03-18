@@ -1,11 +1,11 @@
-name: Docker Image CI for GHCR
+name: Build Docker Image and Publish to GitHub Container Registry
 on:
   push:
     branches:
       - main # Or your desired branch to trigger the workflow
 
 jobs:
-  build_and_pub:
+  build_and_publish_docker_image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

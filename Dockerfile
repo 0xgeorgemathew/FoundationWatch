@@ -16,4 +16,4 @@ COPY dist ./
 # Expose port (if needed)
 EXPOSE 3000  
 
-CMD ["node", "monitorBalance.js"]
+CMD ["pm2-runtime", "start", "monitorBalance.js"]

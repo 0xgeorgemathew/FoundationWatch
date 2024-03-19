@@ -9,7 +9,7 @@ lerna-debug.log*
 dist
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
+.github/.DS_Store
 # Runtime data
 pids
 *.pid

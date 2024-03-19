@@ -89,9 +89,12 @@ async function startWebhookServer() {
 
   webhookServerProcess.on("message", (message: any) => {
     message.data.event.activity.forEach((activity: any) => {
-      console.log(`Asset Name: ${activity.asset}`);
-      console.log(`Value: ${activity.value}`);
-      console.log(`Transaction Hash: ${activity.hash}`);
+      console.log(`${activity.asset} ${activity.value}`);
+      console.log(`https://etherscan.io/tx/${activity.hash}`);
+      sendMessageToChannel(`*${activity.asset} * ${activity.value}`, {
+        parse_mode: "Markdown",
+      });
+      sendMessageToChannel(`https://etherscan.io/tx/${activity.hash}`);
     });
   });
 }

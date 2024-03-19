@@ -89,7 +89,7 @@ async function startWebhookServer() {
 
   webhookServerProcess.on("message", (message: any) => {
     message.data.event.activity.forEach(async (activity: any) => {
-      console.log(`${activity.asset} ${activity.value}`);
+      console.log(`${activity.asset} ${activity.value.toFixed(2)}`);
       console.log(`https://etherscan.io/tx/${activity.hash}`);
       await sendMessageToChannel(
         `*${activity.value} * ${activity.asset} ${printCurrentTime()}`,

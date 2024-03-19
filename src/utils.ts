@@ -1,15 +1,24 @@
 export function printCurrentTime(): string {
-  const options: Intl.DateTimeFormatOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
+  const dateOptions: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
+    timeZone: "Asia/Kolkata",
+  };
+
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
     hour12: false,
     timeZone: "Asia/Kolkata",
   };
 
   const currentTime = new Date();
-  return currentTime.toLocaleTimeString("en-IN", options);
+  const formattedDate = currentTime
+    .toLocaleDateString("en-IN", dateOptions)
+    .replace(/\//g, ".");
+  const formattedTime = currentTime.toLocaleTimeString("en-IN", timeOptions);
+
+  return `${formattedTime} ${formattedDate}`;
 }

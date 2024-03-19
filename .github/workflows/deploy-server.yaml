@@ -28,4 +28,4 @@ jobs:
             echo "Wacth Address : $WATCH_ADDRESS ."
             docker rm $(docker ps -aq) -f && docker rmi $(docker images -q) || true
             docker pull ghcr.io/0xgeorgemathew/addresswatcher:latest
-            docker run -d -e RPC_URL_WSS=$RPC_URL_WSS -e RPC_URL_HTTPS=$RPC_URL_HTTPS -e TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN -e WATCH_ADDRESS=$WATCH_ADDRESS --name addresswatcher --restart unless-stopped ghcr.io/0xgeorgemathew/addresswatcher:latest
+            docker run -p 3000:3000 -d -e RPC_URL_WSS=$RPC_URL_WSS -e RPC_URL_HTTPS=$RPC_URL_HTTPS -e TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN -e WATCH_ADDRESS=$WATCH_ADDRESS --name addresswatcher --restart unless-stopped ghcr.io/0xgeorgemathew/addresswatcher:latest

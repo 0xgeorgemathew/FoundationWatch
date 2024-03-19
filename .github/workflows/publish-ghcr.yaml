@@ -1,4 +1,4 @@
-name: Build Docker Image and Publish to GitHub Container Registry
+name: Build & Publish to GHCR
 on:
   push:
     branches:

@@ -1,4 +1,4 @@
-name: Deploy Docker Image from GHCR to Server
+name: Deploy From GHCR
 on:
   workflow_run:
     workflows: ["Docker Image CI for GHCR"]
@@ -21,4 +21,10 @@ jobs:
             docker pull ghcr.io/0xgeorgemathew/foundationwatch:latest
             docker stop foundationwatch || true
             docker rm foundationwatch || true
-            docker run -d -e ${{ secrets.RPC_URL_HTTPS }} -e ${{ secrets.RPC_URL_WSS }} -e ${{ secrets.TELEGRAM_BOT_TOKEN }} -e ${{ secrets.WATCH_ADDRESS }} --name foundationwatch --restart unless-stopped ghcr.io/0xgeorgemathew/foundationwatch:latest
+            docker run -d \
+                -e RPC_URL_HTTPS=${{ secrets.RPC_URL_HTTPS }} \
+                -e RPC_URL_WSS=${{ secrets.RPC_URL_WSS }} \
+                -e TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} \
+                -e WATCH_ADDRESS=${{ secrets.WATCH_ADDRESS }} \
+                --name foundationwatch --restart unless-stopped \
+                ghcr.io/0xgeorgemathew/foundationwatch:latest

@@ -93,9 +93,9 @@ async function startWebhookServer() {
 }
 
 async function main() {
-  await startWebhookServer();
   setupWebSocketProvider();
   await checkBalance();
+  startWebhookServer();
 }
 
 main().catch((error) => {

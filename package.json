@@ -1,8 +1,8 @@
 {
-  "name": "foundationwatch",
+  "name": "addresswatcher",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "addresswatcher watches address",
+  "main": "monitorBalance.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w"

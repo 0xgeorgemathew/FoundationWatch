@@ -13,7 +13,7 @@ app.post("/webhook", (req, res) => {
   if (process.send) {
     process.send({ type: "webhook", data: req.body });
   }
-  res.status(200).send("Webhook received");
+  res.status(200).send("Webhook Server Triggered");
 });
 
 app.listen(port, () => {

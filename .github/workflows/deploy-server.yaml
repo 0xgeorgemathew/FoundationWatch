@@ -1,7 +1,7 @@
-name: Deploy From GHCR
+name: Deploy to Server from GHCR
 on:
   workflow_run:
-    workflows: ["Docker Image CI for GHCR"]
+    workflows: ["Build & Publish to GHCR"]
     types:
       - completed
 

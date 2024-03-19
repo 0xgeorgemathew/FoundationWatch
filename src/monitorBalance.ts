@@ -88,16 +88,16 @@ async function startWebhookServer() {
   });
 
   webhookServerProcess.on("message", (message: any) => {
-    message.data.event.activity.forEach((activity: any) => {
+    message.data.event.activity.forEach(async (activity: any) => {
       console.log(`${activity.asset} ${activity.value}`);
       console.log(`https://etherscan.io/tx/${activity.hash}`);
-      sendMessageToChannel(
+      await sendMessageToChannel(
         `*${activity.value} * ${activity.asset} ${printCurrentTime()}`,
         {
           parse_mode: "Markdown",
         }
       );
-      sendMessageToChannel(`https://etherscan.io/tx/${activity.hash}`);
+      await sendMessageToChannel(`https://etherscan.io/tx/${activity.hash}`);
     });
   });
 }

@@ -12,7 +12,7 @@ if (!botToken) {
 
 const bot = new TelegramBot(botToken);
 
-export function sendMessageToChannel(
+export async function sendMessageToChannel(
   message: string,
   options: TelegramBot.SendMessageOptions = {}
 ) {

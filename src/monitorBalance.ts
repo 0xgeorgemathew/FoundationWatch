@@ -88,7 +88,7 @@ async function startWebhookServer() {
   });
 
   webhookServerProcess.on("message", (message: any) => {
-    console.log("Message from webhook server:", message);
+    console.log("Webhook received:", JSON.stringify(message, null, 2));
   });
 }
 

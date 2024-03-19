@@ -1,7 +1,7 @@
 {
   "name": "addresswatcher",
   "version": "1.0.0",
-  "description": "addresswatcher watches address",
+  "description": "addresswatcher watch 1 address",
   "main": "monitorBalance.js",
   "scripts": {
     "build": "tsc",

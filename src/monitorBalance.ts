@@ -2,6 +2,7 @@
 
 import { ethers } from "ethers";
 const { formatUnits, parseEther } = ethers.utils;
+import { spawn } from "child_process";
 
 import WebSocket from "ws";
 import dotenv from "dotenv";
@@ -77,8 +78,22 @@ function setupWebSocketProvider() {
     console.log("Connected successfully.");
   });
 }
+async function startWebhookServer() {
+  const isProduction = process.env.NODE_ENV === "production";
+  const webhookServerPath = isProduction
+    ? "webhookServer.js"
+    : "dist/webhookServer.js";
+  const webhookServerProcess = spawn("node", [webhookServerPath], {
+    stdio: ["inherit", "inherit", "inherit", "ipc"],
+  });
+
+  webhookServerProcess.on("message", (message: any) => {
+    console.log("Message from webhook server:", message);
+  });
+}
 
 async function main() {
+  await startWebhookServer();
   setupWebSocketProvider();
   await checkBalance();
 }

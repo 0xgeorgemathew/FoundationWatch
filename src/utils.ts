@@ -20,5 +20,5 @@ export function printCurrentTime(): string {
     .replace(/\//g, ".");
   const formattedTime = currentTime.toLocaleTimeString("en-IN", timeOptions);
 
-  return `${formattedTime} ${formattedDate}`;
+  return `${formattedTime}  ${formattedDate}`;
 }

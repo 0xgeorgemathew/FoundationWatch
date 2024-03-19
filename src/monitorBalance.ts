@@ -88,7 +88,11 @@ async function startWebhookServer() {
   });
 
   webhookServerProcess.on("message", (message: any) => {
-    console.log("Webhook received:", JSON.stringify(message, null, 2));
+    message.data.event.activity.forEach((activity: any) => {
+      console.log(`Asset Name: ${activity.asset}`);
+      console.log(`Value: ${activity.value}`);
+      console.log(`Transaction Hash: ${activity.hash}`);
+    });
   });
 }
 

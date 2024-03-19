@@ -91,9 +91,12 @@ async function startWebhookServer() {
     message.data.event.activity.forEach((activity: any) => {
       console.log(`${activity.asset} ${activity.value}`);
       console.log(`https://etherscan.io/tx/${activity.hash}`);
-      sendMessageToChannel(`*${activity.asset} * ${activity.value}`, {
-        parse_mode: "Markdown",
-      });
+      sendMessageToChannel(
+        `*${activity.value} * ${activity.asset} ${printCurrentTime()}`,
+        {
+          parse_mode: "Markdown",
+        }
+      );
       sendMessageToChannel(`https://etherscan.io/tx/${activity.hash}`);
     });
   });

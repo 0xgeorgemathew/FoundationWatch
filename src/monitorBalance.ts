@@ -25,11 +25,10 @@ async function checkBalance() {
   try {
     lastBalance = await HTTPprovider.getBalance(watchAddress ?? "");
     const formattedBalance = parseFloat(formatUnits(lastBalance)).toFixed(2);
-    console.log(`${printCurrentTime()} - Balance: ${formattedBalance} ETH`);
-    sendMessageToChannel(
-      `*Balance: ${formattedBalance} ETH* \n\n ${printCurrentTime()}`,
-      { parse_mode: "Markdown" }
-    );
+    console.log(`${printCurrentTime()}Balance: ${formattedBalance} ETH`);
+    sendMessageToChannel(`*${formattedBalance} ETH* ${printCurrentTime()}`, {
+      parse_mode: "Markdown",
+    });
   } catch (error) {
     console.error("Error checking balance:", error);
   }
